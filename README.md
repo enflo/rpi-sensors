@@ -96,4 +96,3 @@ The last command shown below retrieves the status of the weatherstation service 
 ```
 sudo service weatherstation status
 ```
-
