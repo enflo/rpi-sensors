@@ -28,11 +28,8 @@ try:
         orientation = "p: {pitch}, r: {roll}, y: {yaw}".format(**orientation)
         logger.log("Orientation:",orientation)
 
-        accel_only = sense.get_accelerometer()
-        accel_only = "p: {pitch}, r: {roll}, y: {yaw}".format(**accel_only)
-        logger.log("Accelerometrer:", accel_only)
 
-        sense.show_message("Temperature C" + str(temp) + "Humidity:" + str(humidity) + "Pressure:" + str(pressure) + "Orientation:" + str(orientation) + "Accelerometrer:" + str(accel_only), scroll_speed=(0.08), back_colour= [0,0,200])
+        sense.show_message("Temperature C" + str(temp) + "Humidity:" + str(humidity) + "Pressure:" + str(pressure) + "Orientation:" + str(orientation), scroll_speed=(0.5), back_colour= [0,0,200])
 
         time.sleep(1)
 
