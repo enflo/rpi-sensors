@@ -26,16 +26,18 @@ try:
     while True:
         humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
 
-        temp = ""
+        temp = temperature
         if temp:
-            temp = temperature
             temp = round(temp, 1)
+        else:
+            hum = ""
         print("Temperature C",temp)
 
-        hum = ""
+        hum = humidity
         if hum:
-            hum = humidity
             hum = round(hum, 1)
+        else:
+            hum = ""
         print("Humidity :",hum)
 
         pressure = "none"
