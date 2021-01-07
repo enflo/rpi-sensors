@@ -1,39 +1,58 @@
 #!/usr/bin/python
-from sense_hat import SenseHat
+import Adafruit_DHT
 import time
-import sys
-from ISStreamer.Streamer import Streamer
-from setting import setting
+import datetime
+import requests
 
+DHT_SENSOR = Adafruit_DHT.DHT22
+DHT_PIN = 3
 
-sense = SenseHat()
-logger = Streamer(bucket_name=setting["BUCKET_NAME"], access_key=setting["ACCESS_KEY"])
-sense.clear()
+DEVICE = ["Raspberry Pi 3+", "DHT22"]
+USERNAME = "Antoni Florit Homar"
+URL= "https://weather.toniflorithomar.dev/ambient/"
+CITY_NAME = "Palma"
+ALTITUDE = ""
+LATITUDE = ""
+SEALEVEL = ""
 
 try:
     while True:
-        temp = sense.get_temperature()
+        humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
+
+        temp = temperature
         temp = round(temp, 1)
-        logger.log("Temperature C",temp)
+        print("Temperature C",temp)
 
-        humidity = sense.get_humidity()
-        humidity = round(humidity, 1)
-        logger.log("Humidity :",humidity)
+        hum = humidity
+        hum = round(hum, 1)
+        print("Humidity :",hum)
 
-        pressure = sense.get_pressure()
-        pressure = round(pressure, 1)
-        logger.log("Pressure:",pressure)
+        pressure = "none"
+        #pressure = round(pressure, 1)
+        #logger.log("Pressure:",pressure)
 
-        orientation = sense.get_orientation()
-        orientation = "p: {pitch}, r: {roll}, y: {yaw}".format(**orientation)
-        logger.log("Orientation:",orientation)
+        payload = {
+                      'username': USERNAME,
+                      'city': {
+                        'name': CITY_NAME,
+                        'longitude': ALTITUDE,
+                        'latitude': LATITUDE,
+                        'sealevel': SEALEVEL
+                      },
+                      'datetime': str(datetime.datetime.now()),
+                      'devices': DEVICE,
+                      "temperature": temp,
+                      "humidity": hum,
+                      "pressure": pressure
+                    }
 
+        headers = {
+                    'Content-Type': 'application/json'
+                    }
 
-        sense.show_message("Temperature C" + str(temp) + "Humidity:" + str(humidity) + "Pressure:" + str(pressure) + "Orientation:" + str(orientation), scroll_speed=(0.5), back_colour= [0,0,200])
+        response = requests.request("POST", URL, headers=headers, data=payload
 
-        time.sleep(1)
+        time.sleep(300)
 
 except KeyboardInterrupt:
     pass
-
-sense.clear()
