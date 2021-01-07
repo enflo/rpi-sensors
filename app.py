@@ -70,5 +70,3 @@ try:
 
 except KeyboardInterrupt:
     pass
-
-Jan 07 15:28:41 raspberrypi python[1092]: {'username': 'Antoni Florit Homar', 'city': {'name': 'Palma', 'longitude': '2.67788529', 'latitude': '39.58578071', 'sealevel': '27 m'}, 'datetime': '2021-01-07 15:23:02
