@@ -65,7 +65,10 @@ try:
         print(payload)
         response = requests.request("POST", URL, headers=headers, data=json.dumps(payload))
         print(response)
-        client.write_points(json.dumps(payload))
+
+        now_ns = int(round(time.time() * 1000000000))
+        influx_string = f"ambient,username={USERNAME},city_name={CITY_NAME},temperature={temp},humidity={hum},pressure={pressure} value=0.64 {now_ns}"
+        response = requests.request("POST", INFLUXURL, data=influx_string)
         time.sleep(300)
 
 except KeyboardInterrupt:
