@@ -4,8 +4,8 @@ import time
 import datetime
 import requests
 
-DHT_SENSOR = Adafruit_DHT.DHT22
-DHT_PIN = 3
+DHT_SENSOR = Adafruit_DHT.AM2302
+DHT_PIN = 4
 
 DEVICE = ["Raspberry Pi 3+", "DHT22"]
 USERNAME = "Antoni Florit Homar"
@@ -32,26 +32,26 @@ try:
         #logger.log("Pressure:",pressure)
 
         payload = {
-                      'username': USERNAME,
-                      'city': {
-                        'name': CITY_NAME,
-                        'longitude': ALTITUDE,
-                        'latitude': LATITUDE,
-                        'sealevel': SEALEVEL
+                      "username": USERNAME,
+                      "city": {
+                        "name": CITY_NAME,
+                        "longitude": ALTITUDE,
+                        "latitude": LATITUDE,
+                        "sealevel": SEALEVEL
                       },
-                      'datetime': str(datetime.datetime.now()),
-                      'devices': DEVICE,
-                      "temperature": temp,
-                      "humidity": hum,
-                      "pressure": pressure
+                      "datetime": str(datetime.datetime.now()),
+                      "devices": DEVICE,
+                      "temperature": str(temp),
+                      "humidity": str(hum),
+                      "pressure": str(pressure)
                     }
 
         headers = {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json"
                     }
-
+        print(payload)
         response = requests.request("POST", URL, headers=headers, data=payload)
-
+        print(response)
         time.sleep(300)
 
 except KeyboardInterrupt:
