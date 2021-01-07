@@ -3,6 +3,7 @@ import Adafruit_DHT
 import time
 import datetime
 import requests
+import json
 
 DHT_SENSOR = Adafruit_DHT.AM2302
 DHT_PIN = 4
@@ -11,9 +12,9 @@ DEVICE = ["Raspberry Pi 3+", "DHT22"]
 USERNAME = "Antoni Florit Homar"
 URL= "https://weather.toniflorithomar.dev/ambient/"
 CITY_NAME = "Palma"
-ALTITUDE = ""
-LATITUDE = ""
-SEALEVEL = ""
+LONGIUDE = "2.67788529"
+LATITUDE = "39.58578071"
+SEALEVEL = "27 m"
 
 try:
     while True:
@@ -35,7 +36,7 @@ try:
                       "username": USERNAME,
                       "city": {
                         "name": CITY_NAME,
-                        "longitude": ALTITUDE,
+                        "longitude": LONGIUDE,
                         "latitude": LATITUDE,
                         "sealevel": SEALEVEL
                       },
@@ -50,7 +51,7 @@ try:
                     "Content-Type": "application/json"
                     }
         print(payload)
-        response = requests.request("POST", URL, headers=headers, data=payload)
+        response = requests.request("POST", URL, headers=headers, data=json.dumps(payload))
         print(response)
         time.sleep(300)
 
