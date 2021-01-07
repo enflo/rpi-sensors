@@ -26,12 +26,16 @@ try:
     while True:
         humidity, temperature = Adafruit_DHT.read_retry(DHT_SENSOR, DHT_PIN)
 
-        temp = temperature
-        temp = round(temp, 1)
+        temp = ""
+        if temp:
+            temp = temperature
+            temp = round(temp, 1)
         print("Temperature C",temp)
 
-        hum = humidity
-        hum = round(hum, 1)
+        hum = ""
+        if hum:
+            hum = humidity
+            hum = round(hum, 1)
         print("Humidity :",hum)
 
         pressure = "none"
@@ -64,3 +68,5 @@ try:
 
 except KeyboardInterrupt:
     pass
+
+Jan 07 15:28:41 raspberrypi python[1092]: {'username': 'Antoni Florit Homar', 'city': {'name': 'Palma', 'longitude': '2.67788529', 'latitude': '39.58578071', 'sealevel': '27 m'}, 'datetime': '2021-01-07 15:23:02
