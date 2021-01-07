@@ -50,7 +50,7 @@ try:
                     'Content-Type': 'application/json'
                     }
 
-        response = requests.request("POST", URL, headers=headers, data=payload
+        response = requests.request("POST", URL, headers=headers, data=payload)
 
         time.sleep(300)
 
