@@ -11,7 +11,7 @@ DHT_SENSOR = Adafruit_DHT.AM2302
 DHT_PIN = 4
 
 DEVICE = ["Raspberry Pi 3+", "DHT22"]
-USERNAME = "Antoni Florit Homar"
+USERNAME = "Antoni" #NOT USE SPACES
 URL = "https://weather.toniflorithomar.dev/ambient/"
 INFLUXURL = "https://influx.toniflorithomar.dev/write?db=weather"
 CITY_NAME = "Palma"
@@ -67,9 +67,16 @@ try:
         print(response)
 
         now_ns = int(round(time.time() * 1000000000))
-        influx_string = f"ambient,username={USERNAME},city_name={CITY_NAME},temperature={temp},humidity={hum},pressure={pressure} value=0.64 {now_ns}"
-        response = requests.request("POST", INFLUXURL, data=influx_string)
+        influx_string_temp = f"ambient,username={USERNAME},city_name={CITY_NAME},temperature={temp},humidity={hum},pressure={pressure} temperature={temp} {now_ns}"
+        influx_string_hum = f"ambient,username={USERNAME},city_name={CITY_NAME},temperature={temp},humidity={hum},pressure={pressure} humidity={hum} {now_ns}"
+        response = requests.request("POST", INFLUXURL, data=influx_string_temp)
+        print(response)
+        response = requests.request("POST", INFLUXURL, data=influx_string_hum)
+        print(response)
         time.sleep(300)
 
 except KeyboardInterrupt:
     pass
+
+
+'ambient,username=Antoni_Florit_Homar,city_name=Palma,temperature=9.4,humidity=99.9,pressure=none value=0.64 1610036169353192704'
